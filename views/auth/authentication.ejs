@@ -13,11 +13,23 @@
 
         <h1>Authenticate</h1>
 
-        <form method="POST">
+        <form method="POST" action='authenticate/login'>
+            <h2>Login</h2>
             <input type="text" name="email" value="brigitta@yahoo.com">
             <input type="text" name="password" value="password">
-            <button type="submit">Submit</button>
+            <button type="submit">Login</button>
         </form>
+
+        <form method="POST" action='authenticate/signup'>
+            <h2>Signup</h2>
+            <input type="text" name="emailSignup" value="brigitta1@yahoo.com">
+            <input type="text" name="passwordSignup" value="password">
+            <input type="text" name="proffesion" value="Frontend Developer">
+            <input type="text" name="experience" value="2">
+            <input type="text" name="interests" value="HTML5, CSS3, JavaScript">
+            <button type="submit">Signup</button>
+        </form>
+
     </main>
 
 </body>
