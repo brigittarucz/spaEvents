@@ -13,6 +13,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
 
+app.use((req,res,next) => {
+    res.status(404).send('<h1>Page not found</h1>');
+})
+
 db.execute('SELECT * FROM users').then(result =>{
     console.log(result[0]);
 }).catch(err => {
