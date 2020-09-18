@@ -4,25 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/overwrite.css">
 </head>
 <body>
+    <nav>
+        <a href="/">Main Events</a>
+        <a href="/">My Dashboard</a>
+        <a href="/logout">Logout</a>
+    </nav>
     <h1><%= sessionId %></h1>
 
-    <main>
-        <!-- TODO: sort by relevance -->
+    <div class="main-events_div" data-location="events">
+        <!-- TODO: sort by relevance -->    
+        Sort by:
+        <button type="text" class="btn">Relevance: Highest to Lowest</button>
+        <button type="text" class="btn">Date: Closest to Latest</button>
+
         <% events.forEach( oEvent => { %>
         <article class="event_article" data-difficulty="<%= oEvent.topics_difficulty %>" data-target="<%= oEvent.proffessional_target %>">
-            <!-- TODO: add image from link -->
             <a href="<%= oEvent.event_link %>" class="event-link">
-                <img src="" alt="">
+                <img src="images/event-placeholder.jpg" alt="" style="height: 100px;">
             </a>
             <h3 class="event-title"> <%= oEvent.title %></h3>
             <p class="event-date"> <%= oEvent.date %> </p>
             <p class="event-location" style="text-transform: capitalize;"><%= oEvent.location %></p>
             <p class="event-topics" style="text-transform: capitalize;"><%= oEvent.topics %></p>
             <p class="event-price"><%= oEvent.attendance_price %></p>
+            <button type="submit" class="btn">Add To Calendar</button>
         </article>
         <% }) %>
-    </main>
+    </div>
+
+    <div class="main-dashboard_div" data-location="dashboard">
+        <h2> Dashboard </h2>
+
+        <div class="personal-dashboard_div">
+            <form>
+
+            </form>
+        </div>
+
+        <div class="calendar-dashboard_div">
+
+        </div>
+
+        <div class="suggested-dashboard_div">
+            
+        </div>
+    </div>
 </body>
 </html>

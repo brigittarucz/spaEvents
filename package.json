@@ -16,6 +16,7 @@
     "email-validator": "^2.0.4",
     "express": "^4.17.1",
     "mysql2": "^2.1.0",
+    "node-fetch": "^2.6.1",
     "node-localstorage": "^2.1.6",
     "uuid": "^8.3.0"
   },
