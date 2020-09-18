@@ -2,7 +2,7 @@ const e = require('express');
 const db = require('../util/database'); 
 
 module.exports = class User {
-    constructor(id, email, password, proffesion, experience, interests) {
+    constructor(id, email, password, proffesion, experience, interests, events) {
         this.id = id;
         this.email = email;
         // TODO: hash
@@ -10,6 +10,7 @@ module.exports = class User {
         this.proffesion = proffesion;
         this.experience = experience;
         this.interests = interests;
+        this.events = events;
     }
 
     static fetchUser() {
@@ -17,7 +18,11 @@ module.exports = class User {
     }
 
     createUser() {
-        return db.execute('INSERT INTO users (id, email, password, proffesion, experience, interests) VALUES (?, ?, ?, ?, ?, ?)',
-        [ this.id, this.email, this.password, this.proffesion, this.experience, this.interests]);
+        return db.execute('INSERT INTO users (id, email, password, proffesion, experience, interests, events) VALUES (?, ?, ?, ?, ?, ?, ?)',
+        [ this.id, this.email, this.password, this.proffesion, this.experience, this.interests, this.events]);
+    }
+
+    fetchUserById(id) {
+
     }
 }
