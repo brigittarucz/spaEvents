@@ -23,7 +23,8 @@ exports.postAuth = (req, res, next) => {
 
                         // TODO: store ID
                         localStorage.setItem('sessionId', user.id);
-                        return res.redirect('/home');
+
+                        return res.redirect('/home/events');
                         
 
                     }
@@ -77,7 +78,8 @@ exports.postAuth = (req, res, next) => {
             // TODO: store ID
 
             localStorage.setItem('sessionId', user.id);
-            return res.redirect('/home');
+
+            return res.redirect('/home/events');
         }).catch(err => { 
             if(err.code === 'ER_DUP_ENTRY') {
                 res.status(500);

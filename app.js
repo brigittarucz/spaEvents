@@ -24,9 +24,10 @@ app.use((req,res,next) => {
 })
 
 db.execute('SELECT * FROM users').then(result =>{
-    console.log(result[0]);
+    // console.log(result[0]);
 }).catch(err => {
     console.log(err);
 });
 
 app.listen(3000);
+

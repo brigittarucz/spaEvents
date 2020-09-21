@@ -22,7 +22,16 @@ module.exports = class User {
         [ this.id, this.email, this.password, this.proffesion, this.experience, this.interests, this.events]);
     }
 
-    fetchUserById(id) {
+    static fetchUserById(id) {
+        return db.execute('SELECT * FROM users WHERE users.id = ?', [id]);
+    }
 
+    saveUser() {
+        return db.execute('UPDATE users SET email = ?, password = ?, proffesion = ?, interests = ? WHERE users.id = ?', 
+        [this.email, this.password, this.proffesion, this.interests, this.id]);
+    }
+
+    static addEventToUser(id, event) {
+        return db.execute('UPDATE users SET events = ? WHERE users.id = ?', [event, id]);
     }
 }

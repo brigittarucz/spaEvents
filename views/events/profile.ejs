@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= pageTitle %></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="/overwrite.css">
+</head>
+<body>
+    <nav>
+        <a href="/home/events" data-location="events" >Main Events</a>
+        <a href="/home/profile" data-location="profile" >My Dashboard</a>
+        <a href="/logout">Logout</a>
+    </nav>
+    <h1><%= sessionId %></h1>
+
+    <div class="main-dashboard_div main-view" data-location="profile">
+        <h2> Dashboard </h2>
+
+        <div class="personal-dashboard_div">
+            <form method="POST" action='/home/profile'>
+                <input type="text" name="email" value="<%= user.email %>">
+                <input type="text" name="password" value="<%= user.password %>">
+                <!-- TODO: make select with proffesion -->
+                <input type="text" name="proffesion" value="<%= user.proffesion %>">
+                <!-- TODO: make dynamic search box interests -->
+                <input type="text" name="interests" value="<%= user.interests %>">
+                <button type="submit" class="btn">Save</button>
+            </form>
+        </div>
+
+        <div class="calendar-dashboard_div">
+
+        </div>
+
+        <div class="suggested-dashboard_div">
+            
+        </div>
+    </div>
+</body>
+</html>

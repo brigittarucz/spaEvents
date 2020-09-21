@@ -3,10 +3,14 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/auth');
 const eventsController = require('../controllers/events');
+const profileController = require('../controllers/profile');
 
 router.get('/authenticate', authController.getAuth);
 router.post('/authenticate/:action', authController.postAuth);
 
-router.get('/home', eventsController.getEvents);
+router.get('/home/events', eventsController.getEvents);
+router.post('/home/events', eventsController.postAddEvent);
 
+router.get('/home/profile', profileController.getProfile);
+router.post('/home/profile', profileController.postProfile);
 module.exports = router;
