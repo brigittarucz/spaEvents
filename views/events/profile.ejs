@@ -31,11 +31,47 @@
         </div>
 
         <div class="calendar-dashboard_div">
-
+            <h2>Calendar</h2>
+            <% if(typeof(events) !== 'string') { %>
+            <% events.forEach( oEvent => { %>
+                <article class="event_article" data-difficulty="<%= oEvent.topics_difficulty %>" data-target="<%= oEvent.proffessional_target %>">
+                    <a href="<%= oEvent.event_link %>" class="event-link">
+                        <img src="images/event-placeholder.jpg" alt="" style="height: 100px;">
+                    </a>
+                    <h3 class="event-title"> <%= oEvent.title %></h3>
+                    <p class="event-date"> <%= oEvent.date %> </p>
+                    <p class="event-location" style="text-transform: capitalize;"><%= oEvent.location %></p>
+                    <p class="event-topics" style="text-transform: capitalize;"><%= oEvent.topics %></p>
+                    <p class="event-price"><%= oEvent.attendance_price %></p>
+                    <form method="POST" action="/home/events">
+                        <input type="hidden" name="eventId" value="<%= oEvent.id %>">
+                        <button type="submit" class="btn">Remove</button>
+                    </form>
+                </article>
+            <% }) %>
+            <% } else { %>
+                <h5><%= events %></h5>
+            <% } %>
         </div>
 
         <div class="suggested-dashboard_div">
-            
+            <h2>Suggested</h2>
+            <% eventsSuggested.forEach( oEvent => { %>
+                <article class="event_article" data-difficulty="<%= oEvent.topics_difficulty %>" data-target="<%= oEvent.proffessional_target %>">
+                    <a href="<%= oEvent.event_link %>" class="event-link">
+                        <img src="images/event-placeholder.jpg" alt="" style="height: 100px;">
+                    </a>
+                    <h3 class="event-title"> <%= oEvent.title %></h3>
+                    <p class="event-date"> <%= oEvent.date %> </p>
+                    <p class="event-location" style="text-transform: capitalize;"><%= oEvent.location %></p>
+                    <p class="event-topics" style="text-transform: capitalize;"><%= oEvent.topics %></p>
+                    <p class="event-price"><%= oEvent.attendance_price %></p>
+                    <form method="POST" action="/home/events">
+                        <input type="hidden" name="eventId" value="<%= oEvent.id %>">
+                        <button type="submit" class="btn">Add to calendar</button>
+                    </form>
+                </article>
+            <% }) %>
         </div>
     </div>
 </body>
