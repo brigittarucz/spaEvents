@@ -6,6 +6,21 @@ const dateFormatter = require('date-fns')
 const fetch = require('node-fetch');
 const User = require('../models/user');
 
+function similar_text(a,b) {
+    var equivalency = 0;
+    var minLength = (a.length > b.length) ? b.length : a.length;    
+    var maxLength = (a.length < b.length) ? b.length : a.length;    
+    for(var i = 0; i < minLength; i++) {
+        if(a[i] == b[i]) {
+            equivalency++;
+        }
+    }
+    
+
+    var weight = equivalency / maxLength;
+    return (weight * 100) + "%";
+}
+
 exports.getEvents = async (req,res,next) => {
 
     Event.fetchEvents().then(resp => {
@@ -14,7 +29,7 @@ exports.getEvents = async (req,res,next) => {
         // TODO: exclude events added to the user's list
 
         User.fetchUserById(localStorage.getItem('sessionId')).then( user => {
-            aUserEvents = JSON.parse(user[0][0].events);
+            var aUserEvents = JSON.parse(user[0][0].events);
            
             if(aUserEvents !== null) {
                 for(let i = 0; i < aUserEvents.length; i++) {
@@ -29,13 +44,28 @@ exports.getEvents = async (req,res,next) => {
 
             async function processEvents() {
 
+                var sUserProffesion = user[0][0].proffesion;
+
                 for(const oEvent of aEvents) {
     
+                    
+                    var aProffessionalTarget = oEvent.proffessional_target.replace(/\s/g, '');
+                    aProffessionalTarget = aProffessionalTarget.split(',');
+                    
+                    for(let j = 0; j < aProffessionalTarget.length; j++) {
+                        var similarity = parseInt(similar_text(user[0][0].proffesion, aProffessionalTarget[j]));
+                        
+                        if( similarity > 10) {
+                            oEvent.similarity = similarity;
+                            break;
+                        }
+                    }
+                    
                     var finalDate = [];
-    
                     if(oEvent.date.includes("-")) {
                         var aDates = oEvent.date.split("-");
                         var aDateBegin = aDates[0].split(".");
+                        oEvent.timestamp = dateFormatter.format(new Date(aDateBegin[2], (parseInt(aDateBegin[1]) - 1), aDateBegin[0]), 'T');
                         aDateBegin = dateFormatter.format(new Date(aDateBegin[2], (parseInt(aDateBegin[1]) - 1), aDateBegin[0]), 'PPP');
                         var aDateEnd = aDates[1].split(".");
                         aDateEnd = dateFormatter.format(new Date(aDateEnd[2], (parseInt(aDateEnd[1]) - 1), aDateEnd[0]), 'PPP');
@@ -43,10 +73,11 @@ exports.getEvents = async (req,res,next) => {
                         finalDate.push(aDateEnd);
                     } else {
                         var aDate = oEvent.date.split(".");
+                        oEvent.timestamp = dateFormatter.format(new Date(aDate[2], (parseInt(aDate[1]) - 1), aDate[0]), 'T');
                         aDate = dateFormatter.format(new Date(aDate[2], (parseInt(aDate[1]) - 1), aDate[0]), 'PPP');
                         finalDate.push(aDate);
                     }
-    
+
                     oEvent.date = finalDate;
     
                     if(oEvent.attendance_price.charAt(0) === 'F') {

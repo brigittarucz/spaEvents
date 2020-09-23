@@ -35,6 +35,7 @@ exports.getProfile = (req,res,next) => {
 
                 var aSuggestedEvents = [];
 
+                
                 for(let i = 0; i < aEvents.length; i++) {
 
                     var aProffessionalTarget = aEvents[i].proffessional_target.replace(/\s/g, '');
@@ -43,7 +44,8 @@ exports.getProfile = (req,res,next) => {
                     for(let j = 0; j < aProffessionalTarget.length; j++) {
                         console.log(aProffessionalTarget[j]);
                         console.log(user[0][0].proffesion);
-                        if(parseInt(similar_text(user[0][0].proffesion, aProffessionalTarget[j])) > 10) {
+                        var similarity = parseInt(similar_text(user[0][0].proffesion, aProffessionalTarget[j]));
+                        if( similarity > 10) {
                             aSuggestedEvents.push(aEvents[i]);
                             break;
                         }
