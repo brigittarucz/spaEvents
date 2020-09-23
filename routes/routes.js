@@ -13,4 +13,6 @@ router.post('/home/events', eventsController.postAddEvent);
 
 router.get('/home/profile', profileController.getProfile);
 router.post('/home/profile', profileController.postProfile);
+router.post('/home/event-delete', profileController.postDeleteFromCalendar);
+
 module.exports = router;

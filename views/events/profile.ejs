@@ -43,7 +43,7 @@
                     <p class="event-location" style="text-transform: capitalize;"><%= oEvent.location %></p>
                     <p class="event-topics" style="text-transform: capitalize;"><%= oEvent.topics %></p>
                     <p class="event-price"><%= oEvent.attendance_price %></p>
-                    <form method="POST" action="/home/events">
+                    <form method="POST" action="/home/event-delete">
                         <input type="hidden" name="eventId" value="<%= oEvent.id %>">
                         <button type="submit" class="btn">Remove</button>
                     </form>

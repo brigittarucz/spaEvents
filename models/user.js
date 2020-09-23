@@ -31,7 +31,7 @@ module.exports = class User {
         [this.email, this.password, this.proffesion, this.interests, this.id]);
     }
 
-    static addEventToUser(id, event) {
+    static updateUserEvents(id, event) {
         return db.execute('UPDATE users SET events = ? WHERE users.id = ?', [event, id]);
     }
 }

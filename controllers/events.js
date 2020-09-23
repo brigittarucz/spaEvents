@@ -166,7 +166,7 @@ exports.postAddEvent = (req, res, next) => {
                 }
             }
 
-            User.addEventToUser(localStorage.getItem('sessionId'), sUpdatedEvents).then( () => {
+            User.updateUserEvents(localStorage.getItem('sessionId'), sUpdatedEvents).then( () => {
                 return res.redirect('/home/events');
             }).catch(err => {
                 res.status(500);

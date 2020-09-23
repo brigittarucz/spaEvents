@@ -1,5 +1,4 @@
 const express = require('express');
-const { JSON } = require('mysql2/lib/constants/types');
 const { LocalStorage } = require('node-localstorage');
 localStorage = new LocalStorage('./scratch');
 const User = require('../models/user');
@@ -207,4 +206,33 @@ exports.postProfile = (req, res, next) => {
         res.end();
     })
 
+}
+
+
+exports.postDeleteFromCalendar = (req, res, next) => {
+
+    User.fetchUserById(localStorage.getItem('sessionId')).then( user => {
+        var aUserEvents = JSON.parse(user[0][0].events);
+        for(let i = 0; i < aUserEvents.length; i++) {
+            if(aUserEvents[i] === req.body.eventId) {
+                aUserEvents.splice(i, 1);
+                break;
+            }
+        }
+
+        User.updateUserEvents(localStorage.getItem('sessionId'), aUserEvents === [] ? 'NULL' : JSON.stringify(aUserEvents)).then( () => {
+            return res.redirect('/home/profile');
+        }).catch(err => {
+            res.status(500);
+            res.setHeader('Content-Type', 'application/json');
+            res.write('{"error": '+ err +'}');
+            res.end();
+        })
+
+    }).catch(err => {
+        res.status(404);
+        res.setHeader('Content-Type', 'application/json');
+        res.write('{"error": '+ err +'}');
+        res.end();
+    })
 }
