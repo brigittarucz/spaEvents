@@ -35,17 +35,13 @@ exports.getProfile = (req,res,next) => {
 
                 var aSuggestedEvents = [];
 
-                
                 for(let i = 0; i < aEvents.length; i++) {
 
                     var aProffessionalTarget = aEvents[i].proffessional_target.replace(/\s/g, '');
                     aProffessionalTarget = aProffessionalTarget.split(',');
                   
                     for(let j = 0; j < aProffessionalTarget.length; j++) {
-                        console.log(aProffessionalTarget[j]);
-                        console.log(user[0][0].proffesion);
-                        var similarity = parseInt(similar_text(user[0][0].proffesion, aProffessionalTarget[j]));
-                        if( similarity > 10) {
+                        if(parseInt(similar_text(user[0][0].proffesion, aProffessionalTarget[j])) > 10) {
                             aSuggestedEvents.push(aEvents[i]);
                             break;
                         }
@@ -110,24 +106,7 @@ exports.getProfile = (req,res,next) => {
                     }
 
                     for(const oEvent of aCalendarEvents) {
-    
-                        var finalDate = [];
-        
-                        if(oEvent.date.includes("-")) {
-                            var aDates = oEvent.date.split("-");
-                            var aDateBegin = aDates[0].split(".");
-                            aDateBegin = dateFormatter.format(new Date(aDateBegin[2], (parseInt(aDateBegin[1]) - 1), aDateBegin[0]), 'PPP');
-                            var aDateEnd = aDates[1].split(".");
-                            aDateEnd = dateFormatter.format(new Date(aDateEnd[2], (parseInt(aDateEnd[1]) - 1), aDateEnd[0]), 'PPP');
-                            finalDate.push(aDateBegin);
-                            finalDate.push(aDateEnd);
-                        } else {
-                            var aDate = oEvent.date.split(".");
-                            aDate = dateFormatter.format(new Date(aDate[2], (parseInt(aDate[1]) - 1), aDate[0]), 'PPP');
-                            finalDate.push(aDate);
-                        }
-        
-                        oEvent.date = finalDate;
+     
         
                         if(oEvent.attendance_price.charAt(0) === 'F') {
                             var price = oEvent.attendance_price.slice(1, oEvent.attendance_price.length);
